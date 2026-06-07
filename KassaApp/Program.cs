@@ -79,60 +79,108 @@ public class Program
     private static void HoofdlusBedieningspaneel(Kassa kassa, Dictionary<string, Artikel> artikelen)
 
     {
+
         string? lastBarcode = null;
+
         Kassaticket? paidTicketDisplay = null;
-        string? paidTicketReference = null;
+
+
 
         while (true)
 
         {
+
             if (paidTicketDisplay != null)
+
             {
+
                 ToonTicket(paidTicketDisplay, kassa);
+
                 Console.WriteLine();
+
                 ToonTicket(kassa.HuidigTicket, kassa);
+
                 Console.WriteLine();
+
             }
+
             else
+
             {
+
                 ToonTicket(kassa.HuidigTicket, kassa);
+
             }
+
+
 
             ToonHelpTekst(kassa);
 
+
+
             Console.Write("> ");
+
+
 
             string? invoer = Console.ReadLine()?.Trim() ?? "";
 
 
 
             if (string.IsNullOrWhiteSpace(invoer))
+
             {
+
                 try { Console.Clear(); } catch { }
+
                 continue;
+
             }
 
+
+
             if (invoer.Length >= 1 && invoer.Length <= 2 && int.TryParse(invoer, out int extraAantal) && extraAantal > 0 && lastBarcode != null)
+
             {
+
                 if (kassa.VoegArtikelToe(lastBarcode, extraAantal))
+
                 {
+
                     paidTicketDisplay = null;
+
                     var artikel = artikelen[lastBarcode];
+
                     var ticket = kassa.HuidigTicket;
+
                     var itemCount = ticket.Items.FirstOrDefault(x => x.artikel.Barcode == lastBarcode).aantal;
+
                     Logger.LogKassa($"SCAN {itemCount}x {artikel.Naam} ({lastBarcode}) op ticket {ticket.Ticketnummer}");
+
                     try { Console.Clear(); } catch { }
+
                 }
+
                 else
+
                 {
+
                     Console.ForegroundColor = ConsoleColor.Yellow;
+
                     Console.WriteLine($"⚠ Kan geen {extraAantal} stuks meer toevoegen van {lastBarcode}.");
+
                     Console.ResetColor();
+
                     System.Threading.Thread.Sleep(1500);
+
                     try { Console.Clear(); } catch { }
+
                 }
+
                 continue;
+
             }
+
+
 
             if (invoer.Equals("A", StringComparison.OrdinalIgnoreCase))
 
@@ -144,14 +192,25 @@ public class Program
 
                 Console.ResetColor();
 
+
+
                 paidTicketDisplay = null;
+
                 var ticketToSave = kassa.HuidigTicket.MaakKopie();
+
                 var ticketNum = kassa.HuidigTicket.Ticketnummer;
+
                 kassa.MaakTicketLeeg();
+
                 Logger.LogKassa($"ANNULERING ticket {ticketNum}");
+
                 SaveAbortedTicket(ticketToSave);
 
+
+
                 try { Console.Clear(); } catch { }
+
+
 
                 continue;
 
@@ -162,60 +221,116 @@ public class Program
             if (invoer.Equals("H", StringComparison.OrdinalIgnoreCase))
 
             {
+
                 if (kassa.AantalGeparkeerd == 0)
+
                 {
+
                     Console.ForegroundColor = ConsoleColor.Yellow;
+
                     Console.WriteLine("⚠ Geen geparkeerde tickets.");
+
                     Console.ResetColor();
+
                     System.Threading.Thread.Sleep(1500);
+
                     try { Console.Clear(); } catch { }
+
                 }
+
                 else if (kassa.HuidigTicket.Items.Count > 0)
+
                 {
+
                     Console.WriteLine();
+
                     Console.ForegroundColor = ConsoleColor.Yellow;
+
                     Console.WriteLine("⚠ Huidig ticket heeft items.");
+
                     Console.WriteLine("[P]arkeren | [K] betalen | [A]nnuleren (wissen): ");
+
                     Console.ResetColor();
+
                     string? keuze = Console.ReadLine()?.Trim().ToUpper() ?? "";
 
+
+
                     if (keuze == "P")
+
                     {
+
                         kassa.ParkeerTicket();
+
                         Console.ForegroundColor = ConsoleColor.Green;
+
                         Console.WriteLine("✓ Ticket geparkeerd.");
+
                         Console.ResetColor();
+
                         System.Threading.Thread.Sleep(1000);
+
                         try { Console.Clear(); } catch { }
+
                         ToonGeparkeerdeTickets(kassa);
+
                     }
+
                     else if (keuze == "K")
+
                     {
+
                         try { Console.Clear(); } catch { }
+
                         // Fall through to let main loop handle payment
+
                         continue;
+
                     }
+
                     else if (keuze == "A")
+
                     {
+
                         paidTicketDisplay = null;
+
                         kassa.MaakTicketLeeg();
+
                         Console.ForegroundColor = ConsoleColor.Red;
+
                         Console.WriteLine("✓ Ticket gewist.");
+
                         Console.ResetColor();
+
                         System.Threading.Thread.Sleep(1000);
+
                         try { Console.Clear(); } catch { }
+
                         ToonGeparkeerdeTickets(kassa);
+
                     }
+
                     else
+
                     {
+
                         try { Console.Clear(); } catch { }
+
                     }
+
                 }
+
                 else
+
                 {
+
                     try { Console.Clear(); } catch { }
+
                     ToonGeparkeerdeTickets(kassa);
+
                 }
+
+
 
                 continue;
 
@@ -229,7 +344,11 @@ public class Program
 
                 kassa.MaakTicketOngedaan();
 
+
+
                 try { Console.Clear(); } catch { }
+
+
 
                 continue;
 
@@ -243,7 +362,11 @@ public class Program
 
                 Console.Write("<scan barcode> of verwijderen: ");
 
+
+
                 string barcode = Console.ReadLine()?.Trim() ?? "";
+
+
 
                 if (!string.IsNullOrWhiteSpace(barcode))
 
@@ -252,9 +375,14 @@ public class Program
                     if (kassa.VerminderArtikelMet1(barcode))
 
                     {
+
                         paidTicketDisplay = null;
+
                         var artikel = artikelen[barcode];
+
                         Logger.LogKassa($"VERWIJDER 1x {artikel.Naam} ({barcode}) van ticket {kassa.HuidigTicket.Ticketnummer}");
+
+
 
                         try { Console.Clear(); } catch { }
 
@@ -297,36 +425,66 @@ public class Program
             {
 
                 try { Console.Clear(); } catch { }
+
                 var ticketBeforPayment = kassa.HuidigTicket.MaakKopie();
 
-                Console.WriteLine();
-                Console.WriteLine("┌─────────────────────────────────┐");
-                Console.WriteLine("│      BETAALTERMINAL             │");
-                Console.WriteLine("├─────────────────────────────────┤");
-                Console.WriteLine($"│ Bedrag: €{ticketBeforPayment.Totaal,22:F2} │");
-                Console.WriteLine("│ Bied uw kaart aan...            │");
-                Console.WriteLine("└─────────────────────────────────┘");
+
+
                 Console.WriteLine();
 
+                Console.WriteLine("┌─────────────────────────────────┐");
+
+                Console.WriteLine("│      BETAALTERMINAL             │");
+
+                Console.WriteLine("├─────────────────────────────────┤");
+
+                Console.WriteLine($"│ Bedrag: €{ticketBeforPayment.Totaal,22:F2} │");
+
+                Console.WriteLine("│ Bied uw kaart aan...            │");
+
+                Console.WriteLine("└─────────────────────────────────┘");
+
+                Console.WriteLine();
+
+
+
                 var result = kassa.BetalenMetKaart();
+
+
 
                 if (result != null)
 
                 {
+
                     Logger.LogKassa($"BETALING ticket {ticketBeforPayment.Ticketnummer}: €{result.Bedrag:F2} ({result.KaartType})");
+
                     try { Console.Clear(); } catch { }
+
                     ToonTicket(ticketBeforPayment, kassa);
+
                     Console.WriteLine(result.KaartType);
+
                     Console.WriteLine(result.GemaskerdKaartnummer);
+
                     Console.WriteLine(result.Methode);
+
                     Console.WriteLine($"Bedrag:     €{result.Bedrag,40:F2}");
+
                     Console.WriteLine($"Ref:        {result.TransactieReferentie}");
+
                     Console.WriteLine("─────────────────────────────────────────────────────");
+
                     Console.ForegroundColor = ConsoleColor.Green;
+
                     Console.WriteLine($"✓ Betaling ontvangen - €{result.Bedrag:F2}".PadCenter(53));
+
                     Console.ResetColor();
+
                     Console.WriteLine();
+
                     Console.WriteLine();
+
+
 
                     SavePaidTicket(ticketBeforPayment, result);
 
@@ -348,6 +506,8 @@ public class Program
 
                 }
 
+
+
                 continue;
 
             }
@@ -359,28 +519,52 @@ public class Program
             {
 
                 try { Console.Clear(); } catch { }
+
                 var totaal = kassa.HuidigTicket.Totaal;
+
                 var ticketBeforePayment = kassa.HuidigTicket.MaakKopie();
+
                 var reference = $"CASH-{DateTime.Now:yyyyMMdd-HHmmss}";
 
+
+
                 kassa.BetalenMetContant(totaal);
+
                 Logger.LogKassa($"BETALING ticket {ticketBeforePayment.Ticketnummer}: €{totaal:F2} (Cash)");
 
+
+
                 try { Console.Clear(); } catch { }
+
                 ToonTicket(ticketBeforePayment, kassa);
+
                 Console.WriteLine("═════════════════════════════════════════════════════");
+
                 Console.WriteLine("─────────────────────────────────────────────────────");
+
                 Console.WriteLine($"Bedrag:     €{totaal,40:F2}");
+
                 Console.WriteLine($"Ref:        {reference}");
+
                 Console.WriteLine("─────────────────────────────────────────────────────");
+
                 Console.ForegroundColor = ConsoleColor.Green;
+
                 Console.WriteLine($"✓ Betaling ontvangen - €{totaal:F2}".PadCenter(53));
+
                 Console.ResetColor();
+
                 Console.WriteLine("═════════════════════════════════════════════════════");
+
                 Console.WriteLine();
 
+
+
                 var cashPaymentDetails = new BetaalDetails("Cash", "-", "Cash", "-", reference, totaal);
+
                 SavePaidTicket(ticketBeforePayment, cashPaymentDetails, isCardPayment: false);
+
+
 
                 continue;
 
@@ -393,25 +577,46 @@ public class Program
             {
 
                 if (kassa.HuidigTicket.Items.Count == 0)
+
                 {
+
                     Console.ForegroundColor = ConsoleColor.Yellow;
+
                     Console.WriteLine("⚠ Kan geen lege ticket parkeren.");
+
                     Console.ResetColor();
+
                     System.Threading.Thread.Sleep(1500);
-                }
-                else
-                {
-                    var oldTicket = kassa.HuidigTicket.Ticketnummer;
-                    kassa.ParkeerTicket();
-                    Logger.LogKassa($"PARKEREN ticket {oldTicket}");
-                    Logger.LogKassa($"NIEUW TICKET {kassa.HuidigTicket.Ticketnummer}");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("✓ Ticket geparkeerd. Nieuw ticket gereed.");
-                    Console.ResetColor();
-                    System.Threading.Thread.Sleep(1500);
+
                 }
 
+                else
+
+                {
+
+                    var oldTicket = kassa.HuidigTicket.Ticketnummer;
+
+                    kassa.ParkeerTicket();
+
+                    Logger.LogKassa($"PARKEREN ticket {oldTicket}");
+
+                    Logger.LogKassa($"NIEUW TICKET {kassa.HuidigTicket.Ticketnummer}");
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("✓ Ticket geparkeerd. Nieuw ticket gereed.");
+
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+
+                }
+
+
+
                 try { Console.Clear(); } catch { }
+
+
 
                 continue;
 
@@ -425,15 +630,23 @@ public class Program
 
                 var hoeveelheid = invoer.Substring(1, invoer.Length - 2);
 
+
+
                 if (int.TryParse(hoeveelheid, out int aantal) && aantal > 0)
 
                 {
+
+
 
                     Console.Write("<scan barcode> of [barcode]<Enter>");
 
                     Console.Write(": ");
 
+
+
                     invoer = Console.ReadLine()?.Trim() ?? "";
+
+
 
                     if (!string.IsNullOrWhiteSpace(invoer))
 
@@ -442,7 +655,10 @@ public class Program
                         if (kassa.VoegArtikelToe(invoer, aantal))
 
                         {
+
                             lastBarcode = invoer;
+
+
 
                             try { Console.Clear(); } catch { }
 
@@ -477,12 +693,20 @@ public class Program
             if (kassa.VoegArtikelToe(invoer))
 
             {
+
                 paidTicketDisplay = null;
+
                 var artikel = artikelen[invoer];
+
                 var ticket = kassa.HuidigTicket;
+
                 var itemCount = ticket.Items.FirstOrDefault(x => x.artikel.Barcode == invoer).aantal;
+
                 Logger.LogKassa($"SCAN {itemCount}x {artikel.Naam} ({invoer}) op ticket {ticket.Ticketnummer}");
+
                 lastBarcode = invoer;
+
+
 
                 try { Console.Clear(); } catch { }
 
@@ -513,6 +737,7 @@ public class Program
     private static void ToonTicket(Kassaticket ticket, Kassa kassa)
 
     {
+
         Console.WriteLine(ticket.GenereerTicketTekst());
 
     }
@@ -739,5 +964,3 @@ public class Program
         }
     }
 }
-
- 
