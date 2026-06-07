@@ -5,6 +5,7 @@ public class Kassa
     private readonly Dictionary<string, Artikel> _artikelen;
     private readonly IBetaalTerminal _betaalTerminal;
     private readonly Stack<Kassaticket> _history = new();
+    private readonly List<Kassaticket> _parkeerdeTickets = new();
     private Kassaticket _huidigTicket = null!;
     private int _ticketNummer = 1;
 
@@ -15,6 +16,8 @@ public class Kassa
     public decimal KassaSaldo { get; private set; } = 0;
 
     public Kassaticket HuidigTicket => _huidigTicket;
+    public IReadOnlyList<Kassaticket> ParkeerdeTickets => _parkeerdeTickets.AsReadOnly();
+    public int AantalGeparkeerd => _parkeerdeTickets.Count;
 
     public Kassa(Dictionary<string, Artikel> artikelen, IBetaalTerminal betaalTerminal,
         string winkel, string adres, string telefoonnummer, string btw)
@@ -44,6 +47,7 @@ public class Kassa
         if (!_artikelen.TryGetValue(barcode, out var artikel))
             return false;
 
+        _history.Push(_huidigTicket.MaakKopie());
         _huidigTicket.VoegArtikelToe(artikel, aantal);
         return true;
     }
@@ -52,6 +56,7 @@ public class Kassa
     {
         if (_huidigTicket.Items.Count > 0)
         {
+            _history.Push(_huidigTicket.MaakKopie());
             var (artikel, _) = _huidigTicket.Items.Last();
             _huidigTicket.VerwijderArtikel(artikel.Barcode);
         }
@@ -59,7 +64,11 @@ public class Kassa
 
     public void MaakTicketLeeg()
     {
-        _huidigTicket.Wis();
+        if (_huidigTicket.Items.Count > 0)
+        {
+            _history.Push(_huidigTicket.MaakKopie());
+            _huidigTicket.Wis();
+        }
     }
 
     public void MaakTicketOngedaan()
@@ -91,10 +100,25 @@ public class Kassa
         }
     }
 
-    public void VoegParkeerenToe(decimal bedrag)
+    public void ParkeerTicket()
     {
-        var parkeerartikel = new Artikel("PARKEER", "Parkeren", bedrag);
-        _huidigTicket.VoegArtikelToe(parkeerartikel);
+        if (_huidigTicket.Items.Count > 0)
+        {
+            _parkeerdeTickets.Add(_huidigTicket);
+            NieuwTicket();
+        }
+    }
+
+    public Kassaticket? HaalGeparkeerdeTicketOp(int index)
+    {
+        if (index >= 0 && index < _parkeerdeTickets.Count)
+        {
+            var ticket = _parkeerdeTickets[index];
+            _parkeerdeTickets.RemoveAt(index);
+            _huidigTicket = ticket;
+            return ticket;
+        }
+        return null;
     }
 
     private string GenereerTicketnummer()

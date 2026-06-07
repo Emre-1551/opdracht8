@@ -50,6 +50,16 @@ public class Kassaticket
         _items.Clear();
     }
 
+    public Kassaticket MaakKopie()
+    {
+        var kopie = new Kassaticket(Ticketnummer, Winkel, Adres, Telefoonnummer, BTW);
+        foreach (var (artikel, aantal) in _items)
+        {
+            kopie.VoegArtikelToe(artikel, aantal);
+        }
+        return kopie;
+    }
+
     public string GenereerTicketTekst()
     {
         var sb = new System.Text.StringBuilder();
@@ -106,7 +116,7 @@ public class Kassaticket
     }
 }
 
-internal static class StringExtensions
+public static class StringExtensions
 {
     public static string PadCenter(this string text, int width)
     {
