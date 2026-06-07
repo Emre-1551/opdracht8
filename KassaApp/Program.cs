@@ -229,11 +229,53 @@ public class Program
 
             {
 
-                kassa.VerwijderLaatsteArtikel();
+                Console.Write("<scan barcode> of verwijderen: ");
 
-                try { Console.Clear(); } catch { }
+                string barcode = Console.ReadLine()?.Trim() ?? "";
 
-                ToonTicket(kassa.HuidigTicket, kassa);
+                if (!string.IsNullOrWhiteSpace(barcode))
+
+                {
+
+                    if (kassa.VerminderArtikelMet1(barcode))
+
+                    {
+
+                        try { Console.Clear(); } catch { }
+
+                        ToonTicket(kassa.HuidigTicket, kassa);
+
+                    }
+
+                    else
+
+                    {
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+
+                        Console.WriteLine($"⚠ Artikel met barcode '{barcode}' niet op ticket.");
+
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1500);
+
+                        try { Console.Clear(); } catch { }
+
+                        ToonTicket(kassa.HuidigTicket, kassa);
+
+                    }
+
+                }
+
+                else
+
+                {
+
+                    try { Console.Clear(); } catch { }
+
+                    ToonTicket(kassa.HuidigTicket, kassa);
+
+                }
 
                 continue;
 
@@ -245,14 +287,24 @@ public class Program
 
             {
 
-                Console.WriteLine("\n⏳ Betaling met kaart wordt verwerkt...");
+                var ticketBeforPayment = kassa.HuidigTicket.MaakKopie();
+
+                Console.WriteLine();
+                Console.WriteLine("┌─────────────────────────────────┐");
+                Console.WriteLine("│      BETAALTERMINAL             │");
+                Console.WriteLine("├─────────────────────────────────┤");
+                var amountStr = ticketBeforPayment.Totaal.ToString("F2").PadLeft(8);
+                Console.WriteLine($"│ Bedrag: €{amountStr}          │");
+                Console.WriteLine("│ Bied uw kaart aan...            │");
+                Console.WriteLine("└─────────────────────────────────┘");
+                Console.WriteLine();
 
                 var result = kassa.BetalenMetKaart();
 
                 if (result != null)
 
                 {
-                    ToonTicket(kassa.HuidigTicket, kassa);
+                    ToonTicket(ticketBeforPayment, kassa);
                     Console.WriteLine();
                     Console.WriteLine("═════════════════════════════════════════════════════");
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -271,8 +323,6 @@ public class Program
                     Console.WriteLine("═════════════════════════════════════════════════════");
                     Console.WriteLine();
 
-                    System.Threading.Thread.Sleep(3000);
-
                 }
 
                 else
@@ -287,11 +337,11 @@ public class Program
 
                     System.Threading.Thread.Sleep(2000);
 
+                    try { Console.Clear(); } catch { }
+
+                    ToonTicket(kassa.HuidigTicket, kassa);
+
                 }
-
-                try { Console.Clear(); } catch { }
-
-                ToonTicket(kassa.HuidigTicket, kassa);
 
                 continue;
 
@@ -312,9 +362,10 @@ public class Program
                     decimal wisselgeld = bedrag - kassa.HuidigTicket.Totaal;
 
                     var totaal = kassa.HuidigTicket.Totaal;
+                    var ticketBeforePayment = kassa.HuidigTicket.MaakKopie();
                     kassa.BetalenMetContant(bedrag);
 
-                    ToonTicket(kassa.HuidigTicket, kassa);
+                    ToonTicket(ticketBeforePayment, kassa);
                     Console.WriteLine();
                     Console.WriteLine("═════════════════════════════════════════════════════");
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -331,8 +382,6 @@ public class Program
                     Console.WriteLine("═════════════════════════════════════════════════════");
                     Console.WriteLine();
 
-                    System.Threading.Thread.Sleep(3000);
-
                 }
 
                 else
@@ -347,11 +396,11 @@ public class Program
 
                     System.Threading.Thread.Sleep(1500);
 
+                    try { Console.Clear(); } catch { }
+
+                    ToonTicket(kassa.HuidigTicket, kassa);
+
                 }
-
-                try { Console.Clear(); } catch { }
-
-                ToonTicket(kassa.HuidigTicket, kassa);
 
                 continue;
 

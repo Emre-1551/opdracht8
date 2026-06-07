@@ -45,6 +45,21 @@ public class Kassaticket
             _items.Remove(item);
     }
 
+    public bool VerminderArtikelMet1(string barcode)
+    {
+        var item = _items.FirstOrDefault(x => x.artikel.Barcode == barcode);
+        if (item != default)
+        {
+            _items.Remove(item);
+            if (item.aantal > 1)
+            {
+                _items.Add((item.artikel, item.aantal - 1));
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void Wis()
     {
         _items.Clear();
@@ -94,12 +109,12 @@ public class Kassaticket
             var subtotal = BerekenSubtotaal();
             var btwBedrag = BerekenBTWBedrag();
 
-            sb.AppendLine($"Subtotaal excl. BTW: €{subtotal,35:F2}");
-            sb.AppendLine($"BTW 21%:             €{btwBedrag,35:F2}");
+            sb.AppendLine($"Subtotaal excl. BTW: €{subtotal,30:F2}");
+            sb.AppendLine($"BTW 21%:             €{btwBedrag,30:F2}");
         }
 
         sb.AppendLine("─────────────────────────────────────────────────────");
-        sb.AppendLine($"TOTAAL: €{Totaal,40:F2}");
+        sb.AppendLine($"TOTAAL: €{Totaal,42:F2}");
         sb.AppendLine("═════════════════════════════════════════════════════");
 
         return sb.ToString();

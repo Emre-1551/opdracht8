@@ -62,6 +62,16 @@ public class Kassa
         }
     }
 
+    public bool VerminderArtikelMet1(string barcode)
+    {
+        if (_artikelen.ContainsKey(barcode))
+        {
+            _history.Push(_huidigTicket.MaakKopie());
+            return _huidigTicket.VerminderArtikelMet1(barcode);
+        }
+        return false;
+    }
+
     public void MaakTicketLeeg()
     {
         if (_huidigTicket.Items.Count > 0)
