@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B2222222-2222-2222-2222-222222222222}|KassaApp\\KassaApp.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\kassaapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2222222-2222-2222-2222-222222222222}|KassaApp\\KassaApp.csproj|solutionrelative:kassaapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5555555-5555-5555-5555-555555555555}|BetaalSysteemMock.Demo\\BetaalSysteemMock.Demo.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\betaalsysteemmock.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5555555-5555-5555-5555-555555555555}|BetaalSysteemMock.Demo\\BetaalSysteemMock.Demo.csproj|solutionrelative:betaalsysteemmock.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4444444-4444-4444-4444-444444444444}|BetaalSysteemMock\\BetaalSysteemMock.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\betaalsysteemmock\\betaalsysteemmock.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D4444444-4444-4444-4444-444444444444}|BetaalSysteemMock\\BetaalSysteemMock.csproj|solutionrelative:betaalsysteemmock\\betaalsysteemmock.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\winkeldomein\\ibetaalterminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|solutionrelative:winkeldomein\\ibetaalterminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\winkeldomein\\betaaldetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|solutionrelative:winkeldomein\\betaaldetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\winkeldomein\\artikel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|solutionrelative:winkeldomein\\artikel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|c:\\gradgent\\progr_basis\\repos\\opdracht_8\\winkeldomein\\kassa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1111111-1111-1111-1111-111111111111}|WinkelDomein\\WinkelDomein.csproj|solutionrelative:winkeldomein\\kassa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,15 +43,87 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\KassaApp\\Program.cs",
+              "RelativeDocumentMoniker": "KassaApp\\Program.cs",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\KassaApp\\Program.cs",
+              "RelativeToolTip": "KassaApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:15:28.239Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\BetaalSysteemMock.Demo\\Program.cs",
+              "RelativeDocumentMoniker": "BetaalSysteemMock.Demo\\Program.cs",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\BetaalSysteemMock.Demo\\Program.cs",
+              "RelativeToolTip": "BetaalSysteemMock.Demo\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:15:22.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BetaalSysteemMock.csproj",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\BetaalSysteemMock\\BetaalSysteemMock.csproj",
+              "RelativeDocumentMoniker": "BetaalSysteemMock\\BetaalSysteemMock.csproj",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\BetaalSysteemMock\\BetaalSysteemMock.csproj",
+              "RelativeToolTip": "BetaalSysteemMock\\BetaalSysteemMock.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-07T13:15:14.175Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IBetaalTerminal.cs",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\IBetaalTerminal.cs",
+              "RelativeDocumentMoniker": "WinkelDomein\\IBetaalTerminal.cs",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\IBetaalTerminal.cs",
+              "RelativeToolTip": "WinkelDomein\\IBetaalTerminal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:15:10.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BetaalDetails.cs",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\BetaalDetails.cs",
+              "RelativeDocumentMoniker": "WinkelDomein\\BetaalDetails.cs",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\BetaalDetails.cs",
+              "RelativeToolTip": "WinkelDomein\\BetaalDetails.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:15:04.672Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Artikel.cs",
+              "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\Artikel.cs",
+              "RelativeDocumentMoniker": "WinkelDomein\\Artikel.cs",
+              "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\Artikel.cs",
+              "RelativeToolTip": "WinkelDomein\\Artikel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T13:14:58.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Kassa.cs",
               "DocumentMoniker": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\Kassa.cs",
               "RelativeDocumentMoniker": "WinkelDomein\\Kassa.cs",
               "ToolTip": "C:\\GradGent\\Progr_basis\\repos\\opdracht_8\\WinkelDomein\\Kassa.cs",
               "RelativeToolTip": "WinkelDomein\\Kassa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAswAIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-06T21:45:07.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-06T21:45:07.246Z"
             }
           ]
         }

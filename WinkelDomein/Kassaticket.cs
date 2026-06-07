@@ -5,7 +5,7 @@ public class Kassaticket
     private readonly List<(Artikel artikel, int aantal)> _items = new();
     public IReadOnlyList<(Artikel artikel, int aantal)> Items => _items.AsReadOnly();
 
-    public string Ticketnummer { get; }
+    public string Ticketnummer { get; set; }
     public DateTime Datum { get; }
     public string Winkel { get; }
     public string Adres { get; }
@@ -91,6 +91,7 @@ public class Kassaticket
         if (_items.Count == 0)
         {
             sb.AppendLine("(leeg)");
+            sb.AppendLine("─────────────────────────────────────────────────────");
         }
         else
         {
@@ -111,10 +112,10 @@ public class Kassaticket
 
             sb.AppendLine($"Subtotaal excl. BTW: €{subtotal,30:F2}");
             sb.AppendLine($"BTW 21%:             €{btwBedrag,30:F2}");
+            sb.AppendLine("─────────────────────────────────────────────────────");
+            sb.AppendLine($"TOTAAL: €{Totaal,42:F2}");
         }
 
-        sb.AppendLine("─────────────────────────────────────────────────────");
-        sb.AppendLine($"TOTAAL: €{Totaal,42:F2}");
         sb.AppendLine("═════════════════════════════════════════════════════");
 
         return sb.ToString();

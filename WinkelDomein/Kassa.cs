@@ -7,7 +7,6 @@ public class Kassa
     private readonly Stack<Kassaticket> _history = new();
     private readonly List<Kassaticket> _parkeerdeTickets = new();
     private Kassaticket _huidigTicket = null!;
-    private int _ticketNummer = 1;
 
     public string Winkel { get; }
     public string Adres { get; }
@@ -49,6 +48,7 @@ public class Kassa
 
         _history.Push(_huidigTicket.MaakKopie());
         _huidigTicket.VoegArtikelToe(artikel, aantal);
+        AktualiseerTicketTimestamp();
         return true;
     }
 
@@ -59,6 +59,7 @@ public class Kassa
             _history.Push(_huidigTicket.MaakKopie());
             var (artikel, _) = _huidigTicket.Items.Last();
             _huidigTicket.VerwijderArtikel(artikel.Barcode);
+            AktualiseerTicketTimestamp();
         }
     }
 
@@ -67,7 +68,10 @@ public class Kassa
         if (_artikelen.ContainsKey(barcode))
         {
             _history.Push(_huidigTicket.MaakKopie());
-            return _huidigTicket.VerminderArtikelMet1(barcode);
+            var result = _huidigTicket.VerminderArtikelMet1(barcode);
+            if (result)
+                AktualiseerTicketTimestamp();
+            return result;
         }
         return false;
     }
@@ -78,6 +82,7 @@ public class Kassa
         {
             _history.Push(_huidigTicket.MaakKopie());
             _huidigTicket.Wis();
+            AktualiseerTicketTimestamp();
         }
     }
 
@@ -134,6 +139,12 @@ public class Kassa
     private string GenereerTicketnummer()
     {
         var nu = DateTime.Now;
-        return $"{nu:yyyy.MM.dd.HH.mm.ss}.{_ticketNummer++:D3}";
+        return $"{nu:yyyy.MM.dd.HH.mm.ss}.{nu.Millisecond:D3}";
+    }
+
+    private void AktualiseerTicketTimestamp()
+    {
+        var nu = DateTime.Now;
+        _huidigTicket.Ticketnummer = $"{nu:yyyy.MM.dd.HH.mm.ss}.{nu.Millisecond:D3}";
     }
 }
