@@ -10,6 +10,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaalSysteemMock.Demo", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KassaApp", "KassaApp\KassaApp.csproj", "{B2222222-2222-2222-2222-222222222222}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logs", "Logs", "{F6666666-6666-6666-6666-666666666666}"
+	ProjectSection(SolutionItems) = preProject
+		systeem-2026-06-07.log = systeem-2026-06-07.log
+		systeem-2026-06-08.log = systeem-2026-06-08.log
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C7777777-7777-7777-7777-777777777777}"
+	ProjectSection(SolutionItems) = preProject
+		data\tickets\ = data\tickets\
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

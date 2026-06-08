@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KassaApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0d0bcfbe5ca0ad0cc7c94726909fa48160bdc49")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3803e2a8c26b30ede564461ca3ca438a8d6f4334")]
 [assembly: System.Reflection.AssemblyProductAttribute("KassaApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KassaApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
