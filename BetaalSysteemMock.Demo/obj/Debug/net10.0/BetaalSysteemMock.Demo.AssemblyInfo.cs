@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BetaalSysteemMock.Demo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0d0bcfbe5ca0ad0cc7c94726909fa48160bdc49")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85e7fe7d3e400419d6d08146e7fccc6172c276dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("BetaalSysteemMock.Demo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BetaalSysteemMock.Demo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

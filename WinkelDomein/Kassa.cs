@@ -3,6 +3,7 @@ namespace WinkelDomein;
 public class Kassa
 {
     private readonly Dictionary<string, Artikel> _artikelen;
+    private readonly Dictionary<string, string> _klanten;
     private readonly IBetaalTerminal _betaalTerminal;
     private readonly Stack<Kassaticket> _history = new();
     private readonly List<Kassaticket> _parkeerdeTickets = new();
@@ -19,9 +20,11 @@ public class Kassa
     public int AantalGeparkeerd => _parkeerdeTickets.Count;
 
     public Kassa(Dictionary<string, Artikel> artikelen, IBetaalTerminal betaalTerminal,
-        string winkel, string adres, string telefoonnummer, string btw)
+        string winkel, string adres, string telefoonnummer, string btw,
+        Dictionary<string, string>? klanten = null)
     {
         _artikelen = artikelen;
+        _klanten = klanten ?? new();
         _betaalTerminal = betaalTerminal;
         Winkel = winkel;
         Adres = adres;
@@ -48,6 +51,17 @@ public class Kassa
 
         _history.Push(_huidigTicket.MaakKopie());
         _huidigTicket.VoegArtikelToe(artikel, aantal);
+        AktualiseerTicketTimestamp();
+        return true;
+    }
+
+    public bool ScanKlantenkaart(string barcode)
+    {
+        if (!_klanten.TryGetValue(barcode, out var klantnaam))
+            return false;
+
+        _history.Push(_huidigTicket.MaakKopie());
+        _huidigTicket.Klantnaam = klantnaam;
         AktualiseerTicketTimestamp();
         return true;
     }

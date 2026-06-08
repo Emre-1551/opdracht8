@@ -11,8 +11,13 @@ public class Kassaticket
     public string Adres { get; }
     public string Telefoonnummer { get; }
     public string BTW { get; }
+    public string? Klantnaam { get; set; }
 
-    public decimal Totaal => _items.Sum(x => x.artikel.Prijs * x.aantal);
+    private const decimal KlantKortingPercentage = 5m;
+
+    public decimal Kortingsbedrag => Klantnaam != null ? BerekenSubtotaal() * KlantKortingPercentage / 100m : 0m;
+
+    public decimal Totaal => BerekenSubtotaal() - Kortingsbedrag;
 
     public Kassaticket(string ticketnummer, string winkel, string adres, string telefoonnummer, string btw)
     {
@@ -68,6 +73,7 @@ public class Kassaticket
     public Kassaticket MaakKopie()
     {
         var kopie = new Kassaticket(Ticketnummer, Winkel, Adres, Telefoonnummer, BTW);
+        kopie.Klantnaam = Klantnaam;
         foreach (var (artikel, aantal) in _items)
         {
             kopie.VoegArtikelToe(artikel, aantal);
@@ -86,6 +92,8 @@ public class Kassaticket
         sb.AppendLine("═════════════════════════════════════════════════════");
         sb.AppendLine($"Ticket: {Ticketnummer}");
         sb.AppendLine($"Datum:  {Datum:yyyy-MM-dd HH:mm}");
+        if (Klantnaam != null)
+            sb.AppendLine($"Klant:  {Klantnaam}");
         sb.AppendLine("─────────────────────────────────────────────────────");
 
         if (_items.Count == 0)
@@ -111,6 +119,8 @@ public class Kassaticket
             var btwBedrag = BerekenBTWBedrag();
 
             sb.AppendLine($"Subtotaal excl. BTW: €{subtotal,30:F2}");
+            if (Klantnaam != null)
+                sb.AppendLine($"Klantenkorting 5%:   €{-Kortingsbedrag,30:F2}");
             sb.AppendLine($"BTW 21%:             €{btwBedrag,30:F2}");
             sb.AppendLine("─────────────────────────────────────────────────────");
             sb.AppendLine($"TOTAAL: €{Totaal,42:F2}");

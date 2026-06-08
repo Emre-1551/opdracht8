@@ -38,6 +38,12 @@ public class Program
 
         Logger.LogSystem($"{artikelen.Count} producten ingeladen.");
 
+        var klanten = new Dictionary<string, string>
+        {
+            { "900001", "Jan Janssens" },
+            { "900002", "Marie Peeters" },
+        };
+
         var betaalTerminal = new MockBetaalTerminal(minWachtMs: 1000, maxWachtMs: 3000);
 
         var kassa = new Kassa(
@@ -52,7 +58,9 @@ public class Program
 
             "09 234 56 78",
 
-            "BE 0123.456.789"
+            "BE 0123.456.789",
+
+            klanten
 
         );
 
@@ -707,6 +715,18 @@ public class Program
                 lastBarcode = invoer;
 
 
+
+                try { Console.Clear(); } catch { }
+
+            }
+
+            else if (kassa.ScanKlantenkaart(invoer))
+
+            {
+
+                paidTicketDisplay = null;
+
+                Logger.LogKassa($"KLANTENKAART {kassa.HuidigTicket.Klantnaam} ({invoer}) op ticket {kassa.HuidigTicket.Ticketnummer}");
 
                 try { Console.Clear(); } catch { }
 
