@@ -888,13 +888,25 @@ public class Program
         try { Console.Clear(); } catch { }
     }
 
+    private static string GetSolutionRoot()
+    {
+        // Walk up from current directory until we find the .sln file
+        var dir = new DirectoryInfo(Directory.GetCurrentDirectory());
+        while (dir != null)
+        {
+            if (dir.GetFiles("*.sln").Length > 0)
+                return dir.FullName;
+            dir = dir.Parent;
+        }
+        return Directory.GetCurrentDirectory();
+    }
+
     private static void SavePaidTicket(Kassaticket ticket, BetaalDetails paymentDetails, bool isCardPayment = true)
     {
         try
         {
-            // Navigate up from KassaApp to solution root, then into data/tickets
-            var appDir = Directory.GetCurrentDirectory();
-            var solutionRoot = Directory.GetParent(appDir)?.FullName ?? appDir;
+            // Navigate to solution root by finding .sln file
+            var solutionRoot = GetSolutionRoot();
             var ticketDir = Path.Combine(solutionRoot, "data", "tickets");
             if (!Directory.Exists(ticketDir))
                 Directory.CreateDirectory(ticketDir);
@@ -939,9 +951,8 @@ public class Program
     {
         try
         {
-            // Navigate up from KassaApp to solution root, then into data/tickets
-            var appDir = Directory.GetCurrentDirectory();
-            var solutionRoot = Directory.GetParent(appDir)?.FullName ?? appDir;
+            // Navigate to solution root by finding .sln file
+            var solutionRoot = GetSolutionRoot();
             var ticketDir = Path.Combine(solutionRoot, "data", "tickets");
             if (!Directory.Exists(ticketDir))
                 Directory.CreateDirectory(ticketDir);

@@ -2,8 +2,20 @@ namespace KassaApp;
 
 public static class Logger
 {
+    private static string GetSolutionRoot()
+    {
+        var dir = new DirectoryInfo(Directory.GetCurrentDirectory());
+        while (dir != null)
+        {
+            if (dir.GetFiles("*.sln").Length > 0)
+                return dir.FullName;
+            dir = dir.Parent;
+        }
+        return Directory.GetCurrentDirectory();
+    }
+
     private static readonly string LogFile = Path.Combine(
-        Directory.GetCurrentDirectory(),
+        GetSolutionRoot(),
         $"systeem-{DateTime.Now:yyyy-MM-dd}.log"
     );
 
