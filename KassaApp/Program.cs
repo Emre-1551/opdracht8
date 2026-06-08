@@ -40,8 +40,8 @@ public class Program
 
         var klanten = new Dictionary<string, string>
         {
-            { "900001", "Jan Janssens" },
-            { "900002", "Marie Peeters" },
+            { "9001", "Emre Ok" },
+            { "9002", "Ramazan Ok" },
         };
 
         var betaalTerminal = new MockBetaalTerminal(minWachtMs: 1000, maxWachtMs: 3000);
